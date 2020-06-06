@@ -1,24 +1,37 @@
-import React from 'react';
+import React ,{Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import List from './list';
 
-class App extends React.Component{
+class App extends Component{
 constructor(props){
-  super(props)
-   this.state={
+  
+  super(props);
+  console.log("constructor");
+  this.textInput = React.createRef();
+    
+}
+state={
   Lists:[]
  } 
+static getDerivedStateFromProps(props,state){
+  console.log("getderivedstate",props)
+  return state;
+}
+componentDidMount(){
+  console.log("ASDASDcomponent")
 }
 
-
 OnClickHandler=()=>{
+  var text=[]
+  text=this.textInput.current.value
  this.setState({
-  Lists: this.state.Lists.concat(this.refs.textvalue.value)
+  Lists: this.state.Lists.concat(text)
+ 
   //Lists: this.refs.textvalue.value
 //<div>{this.state.Lists}</div>
  })
-this.refs.textvalue.value=''
+ this.textInput.current.value=''
 }
 
 deleteEventHandler=(i)=>{
@@ -31,7 +44,7 @@ deleteEventHandler=(i)=>{
 }
 
 render(){
-  
+  console.log("render")
 let Todo=null
 
 Todo=(
@@ -43,24 +56,18 @@ Todo=(
        console.log(Todo)
     })}
     </div>)
-
-
-
    return(
-    <div>
-
+    <Fragment>
     <h1>To Do List</h1>
-    <input type='text' ref="textvalue" />
+    <input type='text'  ref={this.textInput} />
     <button onClick={this.OnClickHandler}>Add</button>
     {Todo}
 
-      
+    </Fragment>
 
-    </div>
+    
 
   )
-
-
 }
 }
 
